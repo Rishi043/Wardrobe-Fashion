@@ -4,7 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Wardrobe Fashion | Ethnic Women's Clothing</title>
-    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.tailwindcss.com"></script> 
+
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700&family=Playfair+Display:wght@400;500;600;700&family=Great+Vibes&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
     <style>
@@ -22,7 +23,7 @@
             letter-spacing: 2px;
         }
         .hero-bg {
-            background-image: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url('https://images.unsplash.com/photo-1595341595379-cf0f59b7a5fe?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80');
+            background-image: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url('https://i.etsystatic.com/26372530/r/il/b3470b/3100547514/il_570xN.3100547514_aw1r.jpg');
             background-size: cover;
             background-position: center;
         }
@@ -38,15 +39,71 @@
         .category-card:hover {
             transform: translateY(-10px);
         }
+        .product-card {
+            transition: all 0.3s ease;
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+        }
+        .product-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+        }
+        .product-image {
+            width: 100%;
+            height: 400px;
+            object-fit: cover;
+            transition: all 0.3s ease;
+        }
+        .product-card:hover .product-image {
+            transform: scale(1.05);
+        }
+        .product-badge {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: #b76e79;
+            color: white;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+        .price-tag {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #b76e79;
+        }
         .testimonial-card {
             background-color: rgba(255, 255, 255, 0.8);
             backdrop-filter: blur(5px);
         }
         .instagram-post {
             transition: all 0.3s ease;
+            overflow: hidden;
+            border-radius: 15px;
+            position: relative;
         }
         .instagram-post:hover {
             transform: scale(1.03);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+        }
+        .instagram-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(45deg, rgba(225, 48, 108, 0.8), rgba(193, 53, 132, 0.8));
+            opacity: 0;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .instagram-post:hover .instagram-overlay {
+            opacity: 1;
         }
         .fade-in {
             animation: fadeIn 1s ease-in;
@@ -78,7 +135,7 @@
             transform: scale(1.1);
         }
         
-        /* Logo Styling from first code */
+        /* Logo Styling */
         .navbar-logo {
             width: 40px;
             height: 40px;
@@ -87,50 +144,11 @@
             margin-right: 12px;
         }
 
-        /* Reels Grid */
-        .reels-container {
+        /* Product Grid */
+        .products-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 20px;
-        }
-
-        .reel-item {
-            background: #fff;
-            border-radius: 15px;
-            overflow: hidden;
-            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
-            transition: all 0.3s ease;
-            position: relative;
-        }
-
-        .reel-item:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 15px 40px rgba(0,0,0,0.2);
-        }
-
-        .reel-placeholder {
-            width: 100%;
-            height: 350px;
-            background: linear-gradient(45deg, #f0f0f0, #e0e0e0);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .reel-placeholder::before {
-            content: '';
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(45deg, transparent 30%, rgba(255,255,255,0.5) 50%, transparent 70%);
-            animation: shimmer 2s ease-in-out infinite;
-        }
-
-        @keyframes shimmer {
-            0% { transform: translateX(-100%); }
-            100% { transform: translateX(100%); }
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 30px;
         }
 
         /* Brand Quote Styling */
@@ -154,6 +172,47 @@
             height: 4px;
             width: 100%;
         }
+
+        /* Quick View Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.8);
+        }
+        .modal-content {
+            background-color: white;
+            margin: 5% auto;
+            padding: 0;
+            border-radius: 15px;
+            width: 90%;
+            max-width: 600px;
+            max-height: 80vh;
+            overflow-y: auto;
+        }
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+            padding: 10px 15px;
+            cursor: pointer;
+        }
+        .close:hover {
+            color: #b76e79;
+        }
+
+        /* Modal Image Styling */
+        .modal-image {
+            width: 100%;
+            height: 300px;
+            object-fit: cover;
+            border-radius: 8px;
+        }
     </style>
 </head>
 <body>
@@ -167,9 +226,9 @@
                 </div>
                 <div class="hidden md:flex space-x-8">
                     <a href="#home" class="text-gray-700 hover:text-[#b76e79] transition duration-300">Home</a>
+                    <a href="#products" class="text-gray-700 hover:text-[#b76e79] transition duration-300">Products</a>
                     <a href="#collections" class="text-gray-700 hover:text-[#b76e79] transition duration-300">Collections</a>
                     <a href="#instagram" class="text-gray-700 hover:text-[#b76e79] transition duration-300">Gallery</a>
-                    <a href="#reels" class="text-gray-700 hover:text-[#b76e79] transition duration-300">Reels</a>
                     <a href="#about" class="text-gray-700 hover:text-[#b76e79] transition duration-300">About</a>
                     <a href="#contact" class="text-gray-700 hover:text-[#b76e79] transition duration-300">Contact</a>
                 </div>
@@ -191,7 +250,135 @@
             </div>
             <h2 class="text-3xl md:text-5xl font-bold mb-6">Where Elegance Meets Ethnic Style</h2>
             <p class="text-xl md:text-2xl mb-8">Handcrafted traditional wear with a contemporary touch</p>
-            <a href="#collections" class="bg-[#b76e79] hover:bg-[#9a5b65] text-white px-8 py-3 rounded-full text-lg font-medium transition duration-300 inline-block transform hover:scale-105">Explore Collection</a>
+            <a href="#products" class="bg-[#b76e79] hover:bg-[#9a5b65] text-white px-8 py-3 rounded-full text-lg font-medium transition duration-300 inline-block transform hover:scale-105">Shop Now</a>
+        </div>
+    </section>
+
+    <!-- Featured Products Section -->
+    <section id="products" class="py-16">
+        <div class="container mx-auto px-6">
+            <h2 class="text-3xl font-bold text-center mb-4">Featured Collection</h2>
+            <div class="divider"></div>
+            <p class="text-center mb-12 max-w-2xl mx-auto">Discover our handpicked selection of premium ethnic wear</p>
+            
+            <div class="products-grid">
+                <!-- Product 1: Blue & White Embroidered Suit Set -->
+                <div class="product-card relative">
+                    <div class="product-badge">New Arrival</div>
+                    <div class="relative overflow-hidden">
+                        <img src="images/kurta 4.jpg" alt="Blue & White Embroidered Suit Set" class="product-image">
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold mb-2">Blue & White Embroidered Suit Set</h3>
+                        <p class="text-gray-600 mb-3">Elegant white cotton suit with beautiful blue floral embroidery. Complete 3-piece set with matching dupatta.</p>
+                        <div class="flex items-center justify-between mb-4">
+                            <span class="price-tag">₹2,899</span>
+                            <div class="flex items-center">
+                                <span class="text-yellow-400 mr-1"><i class="fas fa-star"></i></span>
+                                <span class="text-sm text-gray-600">4.8 (24 reviews)</span>
+                            </div>
+                        </div>
+                        <div class="flex space-x-2 mb-4">
+                            <span class="px-3 py-1 bg-gray-100 rounded-full text-sm">Cotton</span>
+                            <span class="px-3 py-1 bg-gray-100 rounded-full text-sm">Hand Embroidered</span>
+                            <span class="px-3 py-1 bg-gray-100 rounded-full text-sm">3-Piece Set</span>
+                        </div>
+                        <div class="flex space-x-3">
+                            <button onclick="quickView(1)" class="flex-1 bg-[#b76e79] hover:bg-[#9a5b65] text-white py-2 px-4 rounded-lg transition duration-300">Quick View</button>
+                            <a href="https://www.instagram.com/wardrobe._._.fashion/" target="_blank" class="flex-1 bg-gray-800 hover:bg-gray-700 text-white py-2 px-4 rounded-lg text-center transition duration-300">Order Now</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Product 2: Green Daisy Print Suit with Palazzo -->
+                <div class="product-card relative">
+                    <div class="product-badge">Trending</div>
+                    <div class="relative overflow-hidden">
+                        <img src="images/green kurta.png" alt="Green Daisy Print Suit with Palazzo" class="product-image">
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold mb-2">Green Daisy Print Suit with Palazzo</h3>
+                        <p class="text-gray-600 mb-3">Fresh sage green suit with charming white daisy prints. Comes with matching palazzo and dupatta.</p>
+                        <div class="flex items-center justify-between mb-4">
+                            <span class="price-tag">₹3,199</span>
+                            <div class="flex items-center">
+                                <span class="text-yellow-400 mr-1"><i class="fas fa-star"></i></span>
+                                <span class="text-sm text-gray-600">4.9 (18 reviews)</span>
+                            </div>
+                        </div>
+                        <div class="flex space-x-2 mb-4">
+                            <span class="px-3 py-1 bg-gray-100 rounded-full text-sm">Rayon</span>
+                            <span class="px-3 py-1 bg-gray-100 rounded-full text-sm">Digital Print</span>
+                            <span class="px-3 py-1 bg-gray-100 rounded-full text-sm">Palazzo Set</span>
+                        </div>
+                        <div class="flex space-x-3">
+                            <button onclick="quickView(2)" class="flex-1 bg-[#b76e79] hover:bg-[#9a5b65] text-white py-2 px-4 rounded-lg transition duration-300">Quick View</button>
+                            <a href="https://www.instagram.com/wardrobe._._.fashion/" target="_blank" class="flex-1 bg-gray-800 hover:bg-gray-700 text-white py-2 px-4 rounded-lg text-center transition duration-300">Order Now</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Product 3: Navy Blue Traditional Suit Set -->
+                <div class="product-card relative">
+                    <div class="product-badge">Best Seller</div>
+                    <div class="relative overflow-hidden">
+                        <img src="images/525682002_18055757846590141_1522947571042286358_n..jpg" alt="Navy Blue Traditional Suit Set" class="product-image">
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold mb-2">Navy Blue Traditional Suit Set</h3>
+                        <p class="text-gray-600 mb-3">Elegant navy blue suit with intricate traditional motifs and red border dupatta. Perfect for festive occasions.</p>
+                        <div class="flex items-center justify-between mb-4">
+                            <span class="price-tag">₹3,499</span>
+                            <div class="flex items-center">
+                                <span class="text-yellow-400 mr-1"><i class="fas fa-star"></i></span>
+                                <span class="text-sm text-gray-600">4.7 (32 reviews)</span>
+                            </div>
+                        </div>
+                        <div class="flex space-x-2 mb-4">
+                            <span class="px-3 py-1 bg-gray-100 rounded-full text-sm">Georgette</span>
+                            <span class="px-3 py-1 bg-gray-100 rounded-full text-sm">Traditional Print</span>
+                            <span class="px-3 py-1 bg-gray-100 rounded-full text-sm">Festive Wear</span>
+                        </div>
+                        <div class="flex space-x-3">
+                            <button onclick="quickView(3)" class="flex-1 bg-[#b76e79] hover:bg-[#9a5b65] text-white py-2 px-4 rounded-lg transition duration-300">Quick View</button>
+                            <a href="https://www.instagram.com/wardrobe._._.fashion/" target="_blank" class="flex-1 bg-gray-800 hover:bg-gray-700 text-white py-2 px-4 rounded-lg text-center transition duration-300">Order Now</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Product 4: Beige Embroidered Long Kurta -->
+                <div class="product-card relative">
+                    <div class="product-badge">Elegant</div>
+                    <div class="relative overflow-hidden">
+                        <img src="images/Kurta1.jpg" alt="Beige Embroidered Long Kurta" class="product-image">
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold mb-2">Beige Embroidered Long Kurta</h3>
+                        <p class="text-gray-600 mb-3">Sophisticated beige long kurta with delicate golden embroidery work. Perfect for office wear and casual outings.</p>
+                        <div class="flex items-center justify-between mb-4">
+                            <span class="price-tag">₹2,199</span>
+                            <div class="flex items-center">
+                                <span class="text-yellow-400 mr-1"><i class="fas fa-star"></i></span>
+                                <span class="text-sm text-gray-600">4.6 (15 reviews)</span>
+                            </div>
+                        </div>
+                        <div class="flex space-x-2 mb-4">
+                            <span class="px-3 py-1 bg-gray-100 rounded-full text-sm">Cotton Silk</span>
+                            <span class="px-3 py-1 bg-gray-100 rounded-full text-sm">Gold Embroidery</span>
+                            <span class="px-3 py-1 bg-gray-100 rounded-full text-sm">Long Kurta</span>
+                        </div>
+                        <div class="flex space-x-3">
+                            <button onclick="quickView(4)" class="flex-1 bg-[#b76e79] hover:bg-[#9a5b65] text-white py-2 px-4 rounded-lg transition duration-300">Quick View</button>
+                            <a href="https://www.instagram.com/wardrobe._._.fashion/" target="_blank" class="flex-1 bg-gray-800 hover:bg-gray-700 text-white py-2 px-4 rounded-lg text-center transition duration-300">Order Now</a>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            
+            <div class="text-center mt-12">
+                <a href="https://wa.me/919876543210?text=Hi! I'd like to see your complete collection" class="bg-[#b76e79] hover:bg-[#9a5b65] text-white px-8 py-3 rounded-full text-lg font-medium transition duration-300 inline-block transform hover:scale-105">View Complete Collection</a>
+            </div>
         </div>
     </section>
 
@@ -202,19 +389,39 @@
             <div class="divider"></div>
             <p class="text-center mb-12 max-w-2xl mx-auto">Follow us @wardrobe._._.fashion for daily inspiration and new arrivals</p>
             
-            <!-- Instagram Feed -->
+            <!-- Instagram Feed with Real Product Images -->
             <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-                <div class="instagram-post overflow-hidden rounded-lg">
-                    <img src="https://images.unsplash.com/photo-1595341595379-cf0f59b7a5fe?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=500&q=80" alt="Ethnic wear" class="w-full h-full object-cover">
+                <div class="instagram-post">
+                    <img src="images/kurta 4.jpg" alt="Blue & White Embroidered Suit" class="w-full h-full object-cover">
+                    <div class="instagram-overlay">
+                        <a href="https://www.instagram.com/wardrobe._._.fashion" target="_blank" class="text-white text-2xl">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                    </div>
                 </div>
-                <div class="instagram-post overflow-hidden rounded-lg">
-                    <img src="https://images.unsplash.com/photo-1595959183082-d7a0bb6d1268?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=500&q=80" alt="Ethnic wear" class="w-full h-full object-cover">
+                <div class="instagram-post">
+                    <img src="images/green kurta.png" alt="Green Daisy Print Suit" class="w-full h-full object-cover">
+                    <div class="instagram-overlay">
+                        <a href="https://www.instagram.com/wardrobe._._.fashion" target="_blank" class="text-white text-2xl">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                    </div>
                 </div>
-                <div class="instagram-post overflow-hidden rounded-lg">
-                    <img src="https://images.unsplash.com/photo-1581044777550-4cfa60707c03?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=500&q=80" alt="Ethnic wear" class="w-full h-full object-cover">
+                <div class="instagram-post">
+                    <img src="images/kurta 5.jpg" alt="Navy Blue Traditional Suit" class="w-full h-full object-cover">
+                    <div class="instagram-overlay">
+                        <a href="https://www.instagram.com/wardrobe._._.fashion" target="_blank" class="text-white text-2xl">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                    </div>
                 </div>
-                <div class="instagram-post overflow-hidden rounded-lg">
-                    <img src="https://images.unsplash.com/photo-1585487000160-6ebcfceb0d03?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=500&q=80" alt="Ethnic wear" class="w-full h-full object-cover">
+                <div class="instagram-post">
+                    <img src="images/Kurta1.jpg" alt="Beige Embroidered Kurta" class="w-full h-full object-cover">
+                    <div class="instagram-overlay">
+                        <a href="https://www.instagram.com/wardrobe._._.fashion" target="_blank" class="text-white text-2xl">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                    </div>
                 </div>
             </div>
             
@@ -222,153 +429,140 @@
                 <a href="https://www.instagram.com/wardrobe._._.fashion" target="_blank" class="bg-[#b76e79] hover:bg-[#9a5b65] text-white px-8 py-3 rounded-full text-lg font-medium transition duration-300 inline-block transform hover:scale-105">Follow Us</a>
             </div>
         </div>
-    </section>
+    </section> 
 
-    <!-- Collections Section -->
-    <section id="collections" class="py-16">
-        <div class="container mx-auto px-6">
-            <h2 class="text-3xl font-bold text-center mb-4">Our Collections</h2>
-            <div class="divider"></div>
-            <p class="text-center mb-12 max-w-2xl mx-auto">Discover our carefully curated ethnic wear collections</p>
-            
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                <!-- Suit Sets -->
-                <div class="category-card overflow-hidden rounded-lg shadow-lg bg-white">
-                    <div class="relative overflow-hidden h-80">
-                        <img src="https://images.unsplash.com/photo-1595959183082-d7a0bb6d1268?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=500&q=80" alt="Suit Sets" class="w-full h-full object-cover transition duration-500 hover:scale-110">
-                    </div>
-                    <div class="p-6">
-                        <h3 class="text-xl font-bold mb-2">Suit Sets</h3>
-                        <p class="text-gray-600 mb-4">Elegant coordinated sets perfect for any occasion</p>
-                        <a href="#" class="text-[#b76e79] font-medium hover:underline">View Collection →</a>
-                    </div>
+<!-- Collections Section -->
+<section id="collections" class="py-16">
+    <div class="container mx-auto px-6">
+        <h2 class="text-3xl font-bold text-center mb-4">Our Collections</h2>
+        <div class="divider"></div>
+        <p class="text-center mb-12 max-w-2xl mx-auto">Discover our carefully curated ethnic wear collections</p>
+        
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <!-- Suit Sets -->
+            <div class="category-card overflow-hidden rounded-lg shadow-lg bg-white">
+                <div class="relative overflow-hidden h-80">
+                    <a href="https://www.instagram.com/wardrobe._._.fashion/" target="_blank">
+                        <img src="images/kurta 2.jpg" alt="Suit Sets Collection" class="w-full h-full object-cover transition duration-500 hover:scale-110">
+                    </a>
                 </div>
-                
-                <!-- Kurta Sets -->
-                <div class="category-card overflow-hidden rounded-lg shadow-lg bg-white">
-                    <div class="relative overflow-hidden h-80">
-                        <img src="https://images.unsplash.com/photo-1581044777550-4cfa60707c03?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=500&q=80" alt="Kurta Sets" class="w-full h-full object-cover transition duration-500 hover:scale-110">
+                <div class="p-6">
+                    <h3 class="text-xl font-bold mb-2">Suit Sets</h3>
+                    <p class="text-gray-600 mb-4">Elegant coordinated sets perfect for any occasion. From casual to festive wear.</p>
+                    <div class="flex items-center justify-between mb-4">
+                        <span class="text-sm text-gray-500">Starting from ₹2,199</span>
+                        <span class="text-sm font-medium text-[#b76e79]">15+ Designs</span>
                     </div>
-                    <div class="p-6">
-                        <h3 class="text-xl font-bold mb-2">Kurta Sets</h3>
-                        <p class="text-gray-600 mb-4">Traditional kurtas with modern silhouettes</p>
-                        <a href="#" class="text-[#b76e79] font-medium hover:underline">View Collection →</a>
-                    </div>
-                </div>
-                
-                <!-- Plazo Styles -->
-                <div class="category-card overflow-hidden rounded-lg shadow-lg bg-white">
-                    <div class="relative overflow-hidden h-80">
-                        <img src="https://images.unsplash.com/photo-1585487000160-6ebcfceb0d03?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=500&q=80" alt="Plazo Styles" class="w-full h-full object-cover transition duration-500 hover:scale-110">
-                    </div>
-                    <div class="p-6">
-                        <h3 class="text-xl font-bold mb-2">Plazo Styles</h3>
-                        <p class="text-gray-600 mb-4">Flowy and comfortable plazo sets for effortless elegance</p>
-                        <a href="#" class="text-[#b76e79] font-medium hover:underline">View Collection →</a>
-                    </div>
+                    <a href="https://www.instagram.com/wardrobe._._.fashion/" target="_blank" class="text-[#b76e79] font-medium hover:underline">View Collection →</a>
                 </div>
             </div>
             
-            <div class="text-center mt-12">
-                <a href="#" class="bg-[#b76e79] hover:bg-[#9a5b65] text-white px-8 py-3 rounded-full text-lg font-medium transition duration-300 inline-block transform hover:scale-105">Shop All Collections</a>
-            </div>
-        </div>
-    </section>
-
-    <!-- Instagram Reels Section -->
-    <section id="reels" class="py-16 bg-[#f5f0eb]">
-        <div class="container mx-auto px-6">
-            <h2 class="text-3xl font-bold text-center mb-4">Latest Reels From Instagram</h2>
-            <div class="divider"></div>
-            <p class="text-center mb-12 max-w-2xl mx-auto">Check out our latest fashion reels and styling videos</p>
-
-            <div class="reels-container">
-                <!-- Reel 1 -->
-                <div class="reel-item">
-                    <div class="reel-placeholder">
-                        <div class="text-center">
-                            <i class="fas fa-play-circle text-6xl text-[#b76e79] mb-4"></i>
-                            <p class="text-gray-600 font-medium">Ethnic Suit Styling</p>
-                        </div>
-                    </div>
-                    <div class="p-4">
-                        <p class="text-sm text-gray-600 mb-2">Latest styling tips for ethnic suits</p>
-                        <a href="https://www.instagram.com/wardrobe._._.fashion" target="_blank" class="text-[#b76e79] font-medium hover:underline">Watch on Instagram →</a>
-                    </div>
+            <!-- Kurta Sets -->
+            <div class="category-card overflow-hidden rounded-lg shadow-lg bg-white">
+                <div class="relative overflow-hidden h-80">
+                    <a href="https://www.instagram.com/wardrobe._._.fashion/" target="_blank">
+                        <img src="images/kurta 3.jpg" alt="Kurta Sets Collection" class="w-full h-full object-cover transition duration-500 hover:scale-110">
+                    </a>
                 </div>
-
-                <!-- Reel 2 -->
-                <div class="reel-item">
-                    <div class="reel-placeholder">
-                        <div class="text-center">
-                            <i class="fas fa-play-circle text-6xl text-[#b76e79] mb-4"></i>
-                            <p class="text-gray-600 font-medium">Kurta Collection</p>
-                        </div>
+                <div class="p-6">
+                    <h3 class="text-xl font-bold mb-2">Kurta Sets</h3>
+                    <p class="text-gray-600 mb-4">Traditional kurtas with modern silhouettes for contemporary women.</p>
+                    <div class="flex items-center justify-between mb-4">
+                        <span class="text-sm text-gray-500">Starting from ₹1,899</span>
+                        <span class="text-sm font-medium text-[#b76e79]">12+ Designs</span>
                     </div>
-                    <div class="p-4">
-                        <p class="text-sm text-gray-600 mb-2">Showcase of our kurta collection</p>
-                        <a href="https://www.instagram.com/wardrobe._._.fashion" target="_blank" class="text-[#b76e79] font-medium hover:underline">Watch on Instagram →</a>
-                    </div>
-                </div>
-
-                <!-- Reel 3 -->
-                <div class="reel-item">
-                    <div class="reel-placeholder">
-                        <div class="text-center">
-                            <i class="fas fa-play-circle text-6xl text-[#b76e79] mb-4"></i>
-                            <p class="text-gray-600 font-medium">Plazo Styling</p>
-                        </div>
-                    </div>
-                    <div class="p-4">
-                        <p class="text-sm text-gray-600 mb-2">How to style palazzo sets</p>
-                        <a href="https://www.instagram.com/wardrobe._._.fashion" target="_blank" class="text-[#b76e79] font-medium hover:underline">Watch on Instagram →</a>
-                    </div>
-                </div>
-
-                <!-- Reel 4 -->
-                <div class="reel-item">
-                    <div class="reel-placeholder">
-                        <div class="text-center">
-                            <i class="fas fa-play-circle text-6xl text-[#b76e79] mb-4"></i>
-                            <p class="text-gray-600 font-medium">Behind the Scenes</p>
-                        </div>
-                    </div>
-                    <div class="p-4">
-                        <p class="text-sm text-gray-600 mb-2">Behind the scenes of our photoshoot</p>
-                        <a href="https://www.instagram.com/wardrobe._._.fashion" target="_blank" class="text-[#b76e79] font-medium hover:underline">Watch on Instagram →</a>
-                    </div>
+                    <a href="https://www.instagram.com/wardrobe._._.fashion/" target="_blank" class="text-[#b76e79] font-medium hover:underline">View Collection →</a>
                 </div>
             </div>
-
-            <div class="text-center mt-12">
-                <a href="https://www.instagram.com/wardrobe._._.fashion" target="_blank" class="bg-[#b76e79] hover:bg-[#9a5b65] text-white px-8 py-3 rounded-full text-lg font-medium transition duration-300 inline-block transform hover:scale-105">
-                    <i class="fab fa-instagram mr-2"></i>View All Reels
-                </a>
-            </div>
-        </div>
-    </section>
-
-    <!-- About Section -->
-    <section id="about" class="py-16 bg-[#f5f0eb]">
-        <div class="container mx-auto px-6">
-            <div class="flex flex-col md:flex-row items-center">
-                <div class="md:w-1/2 mb-8 md:mb-0 md:pr-12">
-                    <img src="https://images.unsplash.com/photo-1525507119028-ed4c629a60a3?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=500&q=80" alt="About Wardrobe Fashion" class="rounded-lg shadow-lg w-full">
+            
+            <!-- Palazzo Styles -->
+            <div class="category-card overflow-hidden rounded-lg shadow-lg bg-white">
+                <div class="relative overflow-hidden h-80">
+                    <a href="https://www.instagram.com/wardrobe._._.fashion/" target="_blank">
+                        <img src="images/product5.jpg" alt="Palazzo Styles Collection" class="w-full h-full object-cover transition duration-500 hover:scale-110">
+                    </a>
                 </div>
-                <div class="md:w-1/2">
-                    <h2 class="text-3xl font-bold mb-6">Our Story</h2>
-                    <div class="divider"></div>
-                    <p class="text-lg mb-6">Wardrobe Fashion was born from a passion for preserving traditional craftsmanship while adapting to modern aesthetics. Founded in 2020, we set out to create ethnic wear that resonates with today's woman while honoring timeless traditions.</p>
-                    <blockquote class="text-xl italic mb-6 text-[#b76e79]">"Crafted with tradition, styled for today."</blockquote>
-                    <p class="text-lg">Each piece in our collection is thoughtfully designed to celebrate the rich heritage of Indian textiles and embroidery, reimagined for contemporary wardrobes.</p>
+                <div class="p-6">
+                    <h3 class="text-xl font-bold mb-2">Palazzo Styles</h3>
+                    <p class="text-gray-600 mb-4">Flowy and comfortable palazzo sets for effortless elegance.</p>
+                    <div class="flex items-center justify-between mb-4">
+                        <span class="text-sm text-gray-500">Starting from ₹2,299</span>
+                        <span class="text-sm font-medium text-[#b76e79]">10+ Designs</span>
+                    </div>
+                    <a href="https://www.instagram.com/wardrobe._._.fashion/" target="_blank" class="text-[#b76e79] font-medium hover:underline">View Collection →</a>
                 </div>
             </div>
         </div>
-    </section>
+        
+        <div class="text-center mt-12">
+            <a href="https://www.instagram.com/wardrobe._._.fashion/" target="_blank" class="bg-[#b76e79] hover:bg-[#9a5b65] text-white px-8 py-3 rounded-full text-lg font-medium transition duration-300 inline-block transform hover:scale-105">Shop All Collections</a>
+        </div>
+    </div>
+</section>
+
+<!-- About Section -->
+<section id="about" class="py-16 bg-[#f5f0eb]">
+    <div class="container mx-auto px-6">
+        <div class="flex flex-col md:flex-row items-center">
+            
+            <!-- Left Image (Smaller Size) -->
+            <div class="md:w-1/2 mb-8 md:mb-0 md:pr-12 flex justify-center">
+                <img src="images\Screenshot 2025-08-03 183354.png" alt="About Wardrobe Fashion" class="rounded-lg shadow-lg w-[300px] md:w-[400px]">
+            </div>
+            
+            <!-- Right Content -->
+            <div class="md:w-1/2">
+                <h2 class="text-3xl font-bold mb-4">Our Story</h2>
+                <p class="text-lg mb-6 text-gray-700">
+                    Wardrobe Fashion was born from a passion for preserving traditional craftsmanship while adapting to modern aesthetics. Founded in 2020, we set out to create ethnic wear that resonates with today's woman while honoring timeless traditions.
+                </p>
+                
+                <blockquote class="text-xl italic mb-6 text-[#b76e79] border-l-4 border-[#b76e79] pl-4">
+                    "Crafted with tradition, styled for today."
+                </blockquote>
+                
+                <p class="text-lg mb-8 text-gray-700">
+                    Each piece in our collection is thoughtfully designed to celebrate the rich heritage of Indian textiles and embroidery, reimagined for contemporary wardrobes.
+                </p>
+                
+                <!-- Key Features -->
+                <div class="grid grid-cols-2 gap-6">
+                    <!-- Handcrafted -->
+                    <div class="bg-white rounded-lg shadow-sm p-4 text-center">
+                        <i class="fas fa-hands text-2xl text-[#b76e79] mb-2"></i>
+                        <h4 class="font-semibold text-lg">Handcrafted</h4>
+                        <p class="text-sm text-gray-600">Every piece is carefully handmade</p>
+                    </div>
+                    <!-- Premium Fabrics -->
+                    <div class="bg-white rounded-lg shadow-sm p-4 text-center">
+                        <i class="fas fa-leaf text-2xl text-[#b76e79] mb-2"></i>
+                        <h4 class="font-semibold text-lg">Premium Fabrics</h4>
+                        <p class="text-sm text-gray-600">Quality cotton, silk & georgette</p>
+                    </div>
+                    <!-- Fast Delivery -->
+                    <div class="bg-white rounded-lg shadow-sm p-4 text-center">
+                        <i class="fas fa-shipping-fast text-2xl text-[#b76e79] mb-2"></i>
+                        <h4 class="font-semibold text-lg">Fast Delivery</h4>
+                        <p class="text-sm text-gray-600">Quick shipping across India</p>
+                    </div>
+                    <!-- Easy Returns -->
+                    <div class="bg-white rounded-lg shadow-sm p-4 text-center">
+                        <i class="fas fa-undo text-2xl text-[#b76e79] mb-2"></i>
+                        <h4 class="font-semibold text-lg">Easy Returns</h4>
+                        <p class="text-sm text-gray-600">Hassle-free return policy</p>
+                    </div>
+                </div>
+            </div>
+            
+        </div>
+    </div>
+</section>
+
+
 
     <!-- Testimonials -->
     <section class="py-16 relative">
-        <div class="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1605000797499-95a51c5269ae?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2071&q=80')] bg-cover bg-center opacity-10"></div>
+        <div class="absolute inset-0 bg-[url('images/product3.jpg')] bg-cover bg-center opacity-10"></div>
         <div class="container mx-auto px-6 relative">
             <h2 class="text-3xl font-bold text-center mb-12">What Our Customers Say</h2>
             
@@ -382,8 +576,14 @@
                         <span class="text-yellow-400"><i class="fas fa-star"></i></span>
                         <span class="text-yellow-400"><i class="fas fa-star"></i></span>
                     </div>
-                    <p class="text-gray-700 mb-4">"The quality and fit of my kurta set was perfect! I received so many compliments at the wedding I attended."</p>
-                    <p class="font-semibold">- Priya Sharma</p>
+                    <p class="text-gray-700 mb-4">"The quality and fit of my blue embroidered suit was perfect! I received so many compliments at the wedding I attended. The fabric is so comfortable and the embroidery work is exquisite."</p>
+                    <div class="flex items-center">
+                        <div class="w-12 h-12 bg-[#b76e79] rounded-full flex items-center justify-center text-white font-bold mr-3">PS</div>
+                        <div>
+                            <p class="font-semibold">Priya Sharma</p>
+                            <p class="text-sm text-gray-500">Mumbai</p>
+                        </div>
+                    </div>
                 </div>
                 
                 <!-- Testimonial 2 -->
@@ -395,8 +595,14 @@
                         <span class="text-yellow-400"><i class="fas fa-star"></i></span>
                         <span class="text-yellow-400"><i class="fas fa-star"></i></span>
                     </div>
-                    <p class="text-gray-700 mb-4">"Absolutely love my plazo set! It's so comfortable yet looks so elegant. Will definitely order again."</p>
-                    <p class="font-semibold">- Ananya Patel</p>
+                    <p class="text-gray-700 mb-4">"Absolutely love my green daisy palazzo set! It's so comfortable yet looks so elegant. The customer service was excellent and delivery was super quick. Will definitely order again."</p>
+                    <div class="flex items-center">
+                        <div class="w-12 h-12 bg-[#b76e79] rounded-full flex items-center justify-center text-white font-bold mr-3">AP</div>
+                        <div>
+                            <p class="font-semibold">Ananya Patel</p>
+                            <p class="text-sm text-gray-500">Delhi</p>
+                        </div>
+                    </div>
                 </div>
                 
                 <!-- Testimonial 3 -->
@@ -408,8 +614,14 @@
                         <span class="text-yellow-400"><i class="fas fa-star"></i></span>
                         <span class="text-yellow-400"><i class="fas fa-star-half-alt"></i></span>
                     </div>
-                    <p class="text-gray-700 mb-4">"The custom order process was seamless and the final product exceeded my expectations. Highly recommend!"</p>
-                    <p class="font-semibold">- Meera Khanna</p>
+                    <p class="text-gray-700 mb-4">"The custom order process was seamless and the final product exceeded my expectations. The navy blue traditional suit is perfect for festivals. Highly recommend Wardrobe Fashion!"</p>
+                    <div class="flex items-center">
+                        <div class="w-12 h-12 bg-[#b76e79] rounded-full flex items-center justify-center text-white font-bold mr-3">MK</div>
+                        <div>
+                            <p class="font-semibold">Meera Khanna</p>
+                            <p class="text-sm text-gray-500">Bangalore</p>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -420,27 +632,79 @@
         <div class="container mx-auto px-6 max-w-4xl">
             <h2 class="text-3xl font-bold text-center mb-4">Get In Touch</h2>
             <div class="divider"></div>
-            <p class="text-center mb-12">We also take custom orders. Let's connect!</p>
+            <p class="text-center mb-12">We also take custom orders. Let's connect and create something beautiful together!</p>
             
-            <form class="bg-white p-8 rounded-lg shadow-md">
-                <div class="mb-6">
-                    <label for="name" class="block text-gray-700 mb-2">Your Name</label>
-                    <input type="text" id="name" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-[#b76e79]">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <!-- Contact Form -->
+                <div class="bg-white p-8 rounded-lg shadow-md">
+                    <h3 class="text-xl font-bold mb-6">Send us a Message</h3>
+                    <form>
+                        <div class="mb-4">
+                            <label for="name" class="block text-gray-700 mb-2">Your Name</label>
+                            <input type="text" id="name" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-[#b76e79]" required>
+                        </div>
+                        <div class="mb-4">
+                            <label for="whatsapp" class="block text-gray-700 mb-2">WhatsApp Number</label>
+                            <input type="tel" id="whatsapp" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-[#b76e79]" required>
+                        </div>
+                        <div class="mb-4">
+                            <label for="email" class="block text-gray-700 mb-2">Email Address</label>
+                            <input type="email" id="email" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-[#b76e79]">
+                        </div>
+                        <div class="mb-6">
+                            <label for="message" class="block text-gray-700 mb-2">Your Message</label>
+                            <textarea id="message" rows="4" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-[#b76e79]" placeholder="Tell us about your requirements..."></textarea>
+                        </div>
+                        <button type="submit" class="w-full bg-[#b76e79] hover:bg-[#9a5b65] text-white py-3 rounded-lg font-medium transition duration-300">Send Message</button>
+                    </form>
                 </div>
-                <div class="mb-6">
-                    <label for="whatsapp" class="block text-gray-700 mb-2">WhatsApp Number</label>
-                    <input type="tel" id="whatsapp" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-[#b76e79]">
+
+                <!-- Contact Info -->
+                <div class="space-y-6">
+                    <div class="bg-white p-6 rounded-lg shadow-md">
+                        <h3 class="text-xl font-bold mb-4">Contact Information</h3>
+                        <div class="space-y-4">
+                            <div class="flex items-center">
+                                <i class="fas fa-phone-alt text-[#b76e79] mr-4 text-lg"></i>
+                                <div>
+                                    <p class="font-semibold">Phone</p>
+                                    <p class="text-gray-600">+91 9876543210</p>
+                                </div>
+                            </div>
+                            <div class="flex items-center">
+                                <i class="fab fa-whatsapp text-[#25D366] mr-4 text-lg"></i>
+                                <div>
+                                    <p class="font-semibold">WhatsApp</p>
+                                    <p class="text-gray-600">+91 9876543210</p>
+                                </div>
+                            </div>
+                            <div class="flex items-center">
+                                <i class="fas fa-envelope text-[#b76e79] mr-4 text-lg"></i>
+                                <div>
+                                    <p class="font-semibold">Email</p>
+                                    <p class="text-gray-600">info@wardrobefashion.com</p>
+                                </div>
+                            </div>
+                            <div class="flex items-center">
+                                <i class="fab fa-instagram text-[#E4405F] mr-4 text-lg"></i>
+                                <div>
+                                    <p class="font-semibold">Instagram</p>
+                                    <p class="text-gray-600">@wardrobe._._.fashion</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="bg-white p-6 rounded-lg shadow-md">
+                        <h3 class="text-xl font-bold mb-4">Quick Order</h3>
+                        <p class="text-gray-600 mb-4">Want to place a quick order? Just click the WhatsApp button below!</p>
+                        <a href="https://wa.me/919876543210?text=Hi! I'd like to place an order" target="_blank" class="bg-[#25D366] hover:bg-[#128C7E] text-white px-6 py-3 rounded-lg font-medium transition duration-300 inline-flex items-center">
+                            <i class="fab fa-whatsapp mr-2"></i>Order via WhatsApp
+                        </a>
+                    </div>
                 </div>
-                <div class="mb-6">
-                    <label for="email" class="block text-gray-700 mb-2">Email Address</label>
-                    <input type="email" id="email" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-[#b76e79]">
-                </div>
-                <div class="mb-6">
-                    <label for="message" class="block text-gray-700 mb-2">Your Message</label>
-                    <textarea id="message" rows="4" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-[#b76e79]"></textarea>
-                </div>
-                <button type="submit" class="w-full bg-[#b76e79] hover:bg-[#9a5b65] text-white py-3 rounded-lg font-medium transition duration-300">Send Message</button>
-            </form>
+            </div>
         </div>
     </section>
 
@@ -455,56 +719,163 @@
                 "Draped in elegance, stitched with love."
             </div>
 
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                <div>
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div class="md:col-span-2">
                     <h3 class="text-xl font-bold mb-4 logo">Wardrobe Fashion</h3>
-                    <p class="mb-4">Where Elegance Meets Ethnic Style</p>
                     <div class="flex mt-4 space-x-4">
                         <a href="https://www.instagram.com/wardrobe._._.fashion" target="_blank" class="text-white hover:text-[#b76e79] transition duration-300"><i class="fab fa-instagram text-xl"></i></a>
                         <a href="#" class="text-white hover:text-[#b76e79] transition duration-300"><i class="fab fa-facebook text-xl"></i></a>
                         <a href="#" class="text-white hover:text-[#b76e79] transition duration-300"><i class="fab fa-pinterest text-xl"></i></a>
+                        <a href="https://wa.me/919876543210" target="_blank" class="text-white hover:text-[#b76e79] transition duration-300"><i class="fab fa-whatsapp text-xl"></i></a>
                     </div>
                 </div>
                 <div>
                     <h4 class="text-lg font-semibold mb-4">Quick Links</h4>
                     <ul class="space-y-2">
                         <li><a href="#home" class="hover:text-[#b76e79] transition duration-300">Home</a></li>
+                        <li><a href="#products" class="hover:text-[#b76e79] transition duration-300">Products</a></li>
                         <li><a href="#collections" class="hover:text-[#b76e79] transition duration-300">Collections</a></li>
                         <li><a href="#instagram" class="hover:text-[#b76e79] transition duration-300">Gallery</a></li>
-                        <li><a href="#reels" class="hover:text-[#b76e79] transition duration-300">Reels</a></li>
                         <li><a href="#about" class="hover:text-[#b76e79] transition duration-300">About Us</a></li>
                         <li><a href="#contact" class="hover:text-[#b76e79] transition duration-300">Contact</a></li>
                     </ul>
                 </div>
-                <div>
-                    <h4 class="text-lg font-semibold mb-4">Behind the Brand</h4>
-                    <p class="text-sm text-gray-300 mb-4">Every piece tells a story of heritage and craftsmanship, woven with passion and precision.</p>
-                    <div class="mt-4">
-                        <p class="text-xs text-gray-400 italic">~ Designer's Signature</p>
-                    </div>
-                    <div class="mt-6">
-                        <h5 class="text-sm font-semibold mb-2">Contact Us</h5>
-                        <ul class="space-y-1 text-sm text-gray-300">
-                            <li class="flex items-center"><i class="fas fa-phone-alt mr-2 text-xs"></i> +91 9876543210</li>
-                            <li class="flex items-center"><i class="fas fa-envelope mr-2 text-xs"></i> info@wardrobefashion.com</li>
-                            <li class="flex items-center"><i class="fas fa-map-marker-alt mr-2 text-xs"></i> Mumbai, India</li>
-                        </ul>
-                    </div>
-                </div>
             </div>
             <div class="border-t border-gray-700 mt-8 pt-8 text-center">
-                <p>&copy; 2025 Wardrobe Fashion. All rights reserved.</p>
+                <p class="text-sm">&copy; 2025 Wardrobe Fashion. All rights reserved.</p>
             </div>
         </div>
     </footer>
 
+    <!-- Quick View Modal -->
+    <div id="quickViewModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <div id="modalBody">
+                <!-- Modal content will be populated by JavaScript -->
+            </div>
+        </div>
+    </div>
+
     <!-- WhatsApp Float Button -->
-    <a href="https://wa.me/919876543210" class="whatsapp-float" target="_blank">
+    <a href="https://wa.me/919876543210?text=Hi! I'm interested in your ethnic wear collection" class="whatsapp-float" target="_blank" title="Chat with us on WhatsApp">
         <i class="fab fa-whatsapp"></i>
     </a>
 
     <script>
-        // Simple fade-in animation on scroll
+        // Product data for quick view - FIXED IMAGE PATHS
+        const products = {
+            1: {
+                name: "Blue & White Embroidered Suit Set",
+                price: "₹2,899",
+                image: "images/kurta 4.jpg",
+                description: "Elegant white cotton suit with beautiful blue floral embroidery. Complete 3-piece set with matching dupatta. Perfect for casual wear and small gatherings.",
+                features: ["100% Cotton", "Hand Embroidered", "3-Piece Set", "Machine Washable"],
+                sizes: ["S", "M", "L", "XL", "XXL"],
+                colors: ["White with Blue Embroidery"]
+            },
+            2: {
+                name: "Green Daisy Print Suit with Palazzo",
+                price: "₹3,199",
+                image: "images/green kurta.png",
+                description: "Fresh sage green suit with charming white daisy prints. Comes with matching palazzo and dupatta. Comfortable rayon fabric perfect for summer.",
+                features: ["Rayon Fabric", "Digital Print", "Palazzo Set", "Breathable"],
+                sizes: ["S", "M", "L", "XL", "XXL"],
+                colors: ["Sage Green"]
+            },
+            3: {
+                name: "Navy Blue Traditional Suit Set",
+                price: "₹3,499",
+                image: "images/525682002_18055757846590141_1522947571042286358_n..jpg",
+                description: "Elegant navy blue suit with intricate traditional motifs and red border dupatta. Perfect for festive occasions and celebrations.",
+                features: ["Georgette Fabric", "Traditional Print", "Festive Wear", "Rich Finish"],
+                sizes: ["S", "M", "L", "XL", "XXL"],
+                colors: ["Navy Blue"]
+            },
+            4: {
+                name: "Beige Embroidered Long Kurta",
+                price: "₹2,199",
+                image: "images/Kurta1.jpg",
+                description: "Sophisticated beige long kurta with delicate golden embroidery work. Perfect for office wear and casual outings.",
+                features: ["Cotton Silk", "Gold Embroidery", "Long Kurta", "Professional Look"],
+                sizes: ["S", "M", "L", "XL", "XXL"],
+                colors: ["Beige"]
+            }
+        };
+
+        // Quick View functionality - ENHANCED WITH BETTER ERROR HANDLING
+        function quickView(productId) {
+            const product = products[productId];
+            if (!product) {
+                console.error('Product not found:', productId);
+                return;
+            }
+            
+            const modal = document.getElementById('quickViewModal');
+            const modalBody = document.getElementById('modalBody');
+            
+            modalBody.innerHTML = `
+                <div class="p-6">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div>
+                            <img src="${product.image}" 
+                                 alt="${product.name}" 
+                                 class="w-full h-auto rounded-lg object-cover"
+                                 style="max-height: 400px;">
+                        </div>
+                        <div>
+                            <h2 class="text-2xl font-bold mb-2">${product.name}</h2>
+                            <p class="text-2xl text-[#b76e79] font-bold mb-4">${product.price}</p>
+                            <p class="text-gray-600 mb-4">${product.description}</p>
+                            
+                            <div class="mb-4">
+                                <h4 class="font-semibold mb-2">Features:</h4>
+                                <div class="flex flex-wrap gap-2">
+                                    ${product.features.map(feature => `<span class="px-3 py-1 bg-gray-100 rounded-full text-sm">${feature}</span>`).join('')}
+                                </div>
+                            </div>
+                            
+                            <div class="mb-4">
+                                <h4 class="font-semibold mb-2">Available Sizes:</h4>
+                                <div class="flex flex-wrap gap-2">
+                                    ${product.sizes.map(size => `<button class="px-3 py-1 border border-gray-300 rounded hover:border-[#b76e79] hover:text-[#b76e79] transition duration-300">${size}</button>`).join('')}
+                                </div>
+                            </div>
+                            
+                            <div class="mb-6">
+                                <h4 class="font-semibold mb-2">Color:</h4>
+                                <p class="text-gray-600">${product.colors.join(', ')}</p>
+                            </div>
+                            
+                            <div class="flex space-x-3">
+                                <a href="https://www.instagram.com/wardrobe._._.fashion/" target="_blank" class="flex-1 bg-[#b76e79] hover:bg-[#9a5b65] text-white py-3 px-4 rounded-lg text-center transition duration-300">
+                                    <i class="fab fa-instagram mr-2"></i>Order Now
+                                </a>
+                                <a href="https://wa.me/919876543210?text=Hi! I'm interested in ${encodeURIComponent(product.name)} - ${product.price}" target="_blank" class="flex-1 bg-[#25D366] hover:bg-[#128C7E] text-white py-3 px-4 rounded-lg text-center transition duration-300">
+                                    <i class="fab fa-whatsapp mr-2"></i>WhatsApp
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+            
+            modal.style.display = 'block';
+            // Add smooth fade in effect
+            setTimeout(() => {
+                modal.style.opacity = '1';
+            }, 10);
+        }
+
+        function closeModal() {
+            const modal = document.getElementById('quickViewModal');
+            modal.style.opacity = '0';
+            setTimeout(() => {
+                modal.style.display = 'none';
+            }, 300);
+        }
+
+        // Enhanced JavaScript with better functionality
         document.addEventListener('DOMContentLoaded', function() {
             const fadeElements = document.querySelectorAll('.fade-in');
             
@@ -537,13 +908,158 @@
                 });
             });
             
-            // Mobile menu toggle (would need more implementation)
-            const mobileMenuButton = document.querySelector('.md\\:hidden button');
-            mobileMenuButton.addEventListener('click', function() {
-                // This would toggle a mobile menu
-                console.log('Mobile menu clicked - functionality to be implemented');
+            // Modal close events
+            const modal = document.getElementById('quickViewModal');
+            const closeBtn = document.querySelector('.close');
+            
+            if (closeBtn) {
+                closeBtn.onclick = closeModal;
+            }
+            
+            window.onclick = function(event) {
+                if (event.target == modal) {
+                    closeModal();
+                }
+            };
+
+            // Enhanced form submission handling
+            const contactForm = document.querySelector('#contact form');
+            if (contactForm) {
+                contactForm.addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    
+                    const name = document.getElementById('name').value;
+                    const whatsapp = document.getElementById('whatsapp').value;
+                    const email = document.getElementById('email').value;
+                    const message = document.getElementById('message').value;
+                    
+                    const whatsappMessage = `Hi! I'm ${name}. WhatsApp: ${whatsapp}. Email: ${email}. Message: ${message}`;
+                    const whatsappUrl = `https://wa.me/919876543210?text=${encodeURIComponent(whatsappMessage)}`;
+                    
+                    window.open(whatsappUrl, '_blank');
+                    
+                    // Show success message
+                    const toast = document.createElement('div');
+                    toast.className = 'fixed top-4 right-4 bg-green-500 text-white px-6 py-3 rounded-lg shadow-lg z-50 transition-all duration-300';
+                    toast.innerHTML = '<i class="fas fa-check mr-2"></i>Message sent via WhatsApp!';
+                    document.body.appendChild(toast);
+                    
+                    setTimeout(() => {
+                        toast.style.opacity = '0';
+                        setTimeout(() => {
+                            document.body.removeChild(toast);
+                        }, 300);
+                    }, 3000);
+                });
+            }
+
+            // Enhanced image loading with fallback
+            const images = document.querySelectorAll('img');
+            images.forEach(img => {
+                img.addEventListener('load', function() {
+                    this.style.opacity = '1';
+                });
+                
+                img.addEventListener('error', function() {
+                    console.log('Image failed to load:', this.src);
+                    // Don't hide the image, let the onerror in HTML handle it
+                });
+            });
+
+            // Add scroll-to-top functionality
+            let scrollToTopBtn = document.createElement('button');
+            scrollToTopBtn.innerHTML = '<i class="fas fa-arrow-up"></i>';
+            scrollToTopBtn.className = 'fixed bottom-24 right-4 w-12 h-12 bg-[#b76e79] text-white rounded-full shadow-lg opacity-0 transition-all duration-300 z-50 hover:bg-[#9a5b65]';
+            scrollToTopBtn.style.display = 'none';
+            document.body.appendChild(scrollToTopBtn);
+
+            window.addEventListener('scroll', function() {
+                if (window.pageYOffset > 300) {
+                    scrollToTopBtn.style.display = 'block';
+                    scrollToTopBtn.style.opacity = '1';
+                } else {
+                    scrollToTopBtn.style.opacity = '0';
+                    setTimeout(() => {
+                        if (scrollToTopBtn.style.opacity === '0') {
+                            scrollToTopBtn.style.display = 'none';
+                        }
+                    }, 300);
+                }
+            });
+
+            scrollToTopBtn.addEventListener('click', function() {
+                window.scrollTo({
+                    top: 0,
+                    behavior: 'smooth'
+                });
             });
         });
+
+        // Intersection Observer for animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver(function(entries) {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        // Observe elements for animation
+        document.addEventListener('DOMContentLoaded', function() {
+            const animateElements = document.querySelectorAll('.product-card, .category-card, .testimonial-card');
+            animateElements.forEach(el => {
+                el.style.opacity = '0';
+                el.style.transform = 'translateY(20px)';
+                el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+                observer.observe(el);
+            });
+        });
+    </script>
+
+    <!-- Schema.org structured data for SEO -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "ClothingStore",
+        "name": "Wardrobe Fashion",
+        "description": "Premium ethnic women's clothing store offering handcrafted suits, kurtas, and palazzo sets",
+        "url": "https://wardrobefashion.com",
+        "telephone": "+91-9876543210",
+        "address": {
+            "@type": "PostalAddress",
+            "addressLocality": "Mumbai",
+            "addressCountry": "IN"
+        },
+        "sameAs": [
+            "https://www.instagram.com/wardrobe._._.fashion"
+        ],
+        "hasOfferCatalog": {
+            "@type": "OfferCatalog",
+            "name": "Ethnic Wear Collection",
+            "itemListElement": [
+                {
+                    "@type": "Offer",
+                    "itemOffered": {
+                        "@type": "Product",
+                        "name": "Blue & White Embroidered Suit Set",
+                        "description": "Elegant white cotton suit with beautiful blue floral embroidery",
+                        "image": "images/kurta 4.jpg",
+                        "offers": {
+                            "@type": "Offer",
+                            "price": "2899",
+                            "priceCurrency": "INR"
+                        }
+                    }
+                }
+            ]
+        }
+    }
     </script>
 </body>
 </html>
