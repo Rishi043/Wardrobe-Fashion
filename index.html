@@ -21,6 +21,7 @@
             font-family: 'Great Vibes', cursive;
             font-weight: 700;
             letter-spacing: 2px;
+            margin: 0;
         }
         .hero-bg {
             background-image: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url('https://i.etsystatic.com/26372530/r/il/b3470b/3100547514/il_570xN.3100547514_aw1r.jpg');
@@ -112,28 +113,6 @@
             from { opacity: 0; }
             to { opacity: 1; }
         }
-        .whatsapp-float {
-            position: fixed;
-            width: 60px;
-            height: 60px;
-            bottom: 40px;
-            right: 40px;
-            background-color: #25D366;
-            color: #FFF;
-            border-radius: 50px;
-            text-align: center;
-            font-size: 30px;
-            box-shadow: 2px 2px 3px #999;
-            z-index: 100;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: all 0.3s ease;
-        }
-        .whatsapp-float:hover {
-            background-color: #128C7E;
-            transform: scale(1.1);
-        }
         
         /* Logo Styling */
         .navbar-logo {
@@ -141,7 +120,7 @@
             height: 40px;
             border-radius: 50%;
             object-fit: cover;
-            margin-right: 12px;
+            margin-right: 8px;
         }
 
         /* Product Grid */
@@ -213,6 +192,35 @@
             object-fit: cover;
             border-radius: 8px;
         }
+
+        /* Mobile Menu Styling */
+        nav .hidden.md:flex {
+            transition: all 0.3s ease;
+        }
+
+        nav .flex-col {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            right: 0;
+            background: white;
+            padding: 1rem;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            z-index: 50;
+        }
+
+        nav .space-y-4 > a {
+            padding: 0.5rem 1rem;
+            text-align: center;
+        }
+
+        .navbar-logo, .hero-logo {
+            margin-right: 8px;
+        }
+
+        .flex.items-center.space-x-2 > * {
+            margin: 0;
+        }
     </style>
 </head>
 <body>
@@ -220,7 +228,7 @@
     <nav class="bg-white shadow-md sticky top-0 z-50">
         <div class="container mx-auto px-6 py-3">
             <div class="flex items-center justify-between">
-                <div class="flex items-center">
+                <div class="flex items-center space-x-2">
                     <img src="images/logo.jpg" alt="Wardrobe Fashion Logo" class="navbar-logo" onerror="this.style.display='none'">
                     <div class="logo text-3xl font-bold text-[#b76e79]">Wardrobe Fashion</div>
                 </div>
@@ -233,7 +241,7 @@
                     <a href="#contact" class="text-gray-700 hover:text-[#b76e79] transition duration-300">Contact</a>
                 </div>
                 <div class="md:hidden">
-                    <button class="text-gray-700 focus:outline-none">
+                    <button id="mobile-menu-btn" class="text-gray-700 focus:outline-none">
                         <i class="fas fa-bars text-2xl"></i>
                     </button>
                 </div>
@@ -244,8 +252,8 @@
     <!-- Hero Section -->
     <section id="home" class="hero-bg h-screen flex items-center justify-center text-center text-white fade-in">
         <div class="container mx-auto px-6">
-            <div class="flex items-center justify-center mb-8">
-                <img src="images/logo.jpg" alt="Wardrobe Fashion Logo" class="w-20 h-20 rounded-full object-cover mr-6 shadow-lg" onerror="this.style.display='none'">
+            <div class="flex items-center justify-center space-x-4 mb-8">
+                <img src="images/logo.jpg" alt="Wardrobe Fashion Logo" class="w-20 h-20 rounded-full object-cover mr-4 shadow-lg" onerror="this.style.display='none'">
                 <h1 class="text-4xl md:text-6xl font-bold logo">Wardrobe Fashion</h1>
             </div>
             <h2 class="text-3xl md:text-5xl font-bold mb-6">Where Elegance Meets Ethnic Style</h2>
@@ -373,7 +381,6 @@
                         </div>
                     </div>
                 </div>
-
             </div>
             
             <div class="text-center mt-12">
@@ -558,8 +565,6 @@
     </div>
 </section>
 
-
-
     <!-- Testimonials -->
     <section class="py-16 relative">
         <div class="absolute inset-0 bg-[url('images/product3.jpg')] bg-cover bg-center opacity-10"></div>
@@ -695,7 +700,6 @@
                         </div>
                     </div>
 
-
                     <div class="bg-white p-6 rounded-lg shadow-md">
                         <h3 class="text-xl font-bold mb-4">Quick Order</h3>
                         <p class="text-gray-600 mb-4">Want to place a quick order? Just click the WhatsApp button below!</p>
@@ -756,11 +760,6 @@
             </div>
         </div>
     </div>
-
-    <!-- WhatsApp Float Button -->
-    <a href="https://wa.me/919876543210?text=Hi! I'm interested in your ethnic wear collection" class="whatsapp-float" target="_blank" title="Chat with us on WhatsApp">
-        <i class="fab fa-whatsapp"></i>
-    </a>
 
     <script>
         // Product data for quick view - FIXED IMAGE PATHS
@@ -877,6 +876,16 @@
 
         // Enhanced JavaScript with better functionality
         document.addEventListener('DOMContentLoaded', function() {
+            const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+            const navLinks = document.querySelector('nav .hidden.md:flex');
+
+            mobileMenuBtn.addEventListener('click', function() {
+                navLinks.classList.toggle('hidden');
+                navLinks.classList.toggle('flex');
+                navLinks.classList.toggle('flex-col');
+                navLinks.classList.toggle('space-y-4');
+            });
+
             const fadeElements = document.querySelectorAll('.fade-in');
             
             const fadeInOnScroll = function() {
@@ -969,7 +978,7 @@
             // Add scroll-to-top functionality
             let scrollToTopBtn = document.createElement('button');
             scrollToTopBtn.innerHTML = '<i class="fas fa-arrow-up"></i>';
-            scrollToTopBtn.className = 'fixed bottom-24 right-4 w-12 h-12 bg-[#b76e79] text-white rounded-full shadow-lg opacity-0 transition-all duration-300 z-50 hover:bg-[#9a5b65]';
+            scrollToTopBtn.className = 'fixed bottom-8 right-4 w-12 h-12 bg-[#b76e79] text-white rounded-full shadow-lg opacity-0 transition-all duration-300 z-50 hover:bg-[#9a5b65]';
             scrollToTopBtn.style.display = 'none';
             document.body.appendChild(scrollToTopBtn);
 
