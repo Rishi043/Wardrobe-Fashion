@@ -112,28 +112,8 @@
             from { opacity: 0; }
             to { opacity: 1; }
         }
-        .whatsapp-float {
-            position: fixed;
-            width: 60px;
-            height: 60px;
-            bottom: 40px;
-            right: 40px;
-            background-color: #25D366;
-            color: #FFF;
-            border-radius: 50px;
-            text-align: center;
-            font-size: 30px;
-            box-shadow: 2px 2px 3px #999;
-            z-index: 100;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: all 0.3s ease;
-        }
-        .whatsapp-float:hover {
-            background-color: #128C7E;
-            transform: scale(1.1);
-        }
+        
+        /* REMOVED: WhatsApp float button styles - as requested */
         
         /* Logo Styling */
         .navbar-logo {
@@ -213,11 +193,66 @@
             object-fit: cover;
             border-radius: 8px;
         }
+
+        /* ADDED: Mobile menu styles for hamburger functionality */
+        .mobile-menu {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            right: 0;
+            background-color: white;
+            border-top: 1px solid #e5e7eb;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            z-index: 50;
+        }
+        
+        .mobile-menu.active {
+            display: block;
+        }
+        
+        .mobile-menu a {
+            display: block;
+            padding: 12px 24px;
+            text-decoration: none;
+            color: #374151;
+            border-bottom: 1px solid #f3f4f6;
+            transition: background-color 0.2s;
+        }
+        
+        .mobile-menu a:hover {
+            background-color: #f9fafb;
+            color: #b76e79;
+        }
+        
+        .mobile-menu a:last-child {
+            border-bottom: none;
+        }
+
+        /* ADDED: Hamburger button styling */
+        .hamburger-btn {
+            cursor: pointer;
+            padding: 8px;
+            border: none;
+            background: none;
+            color: #374151;
+            font-size: 1.5rem;
+            transition: color 0.2s;
+        }
+        
+        .hamburger-btn:hover {
+            color: #b76e79;
+        }
+        
+        .hamburger-btn:focus {
+            outline: none;
+        }
     </style>
 </head>
 <body>
     <!-- Navigation -->
-    <nav class="bg-white shadow-md sticky top-0 z-50">
+    <!-- UPDATED: Added proper mobile menu functionality -->
+    <nav class="bg-white shadow-md sticky top-0 z-50 relative">
         <div class="container mx-auto px-6 py-3">
             <div class="flex items-center justify-between">
                 <div class="flex items-center">
@@ -232,11 +267,21 @@
                     <a href="#about" class="text-gray-700 hover:text-[#b76e79] transition duration-300">About</a>
                     <a href="#contact" class="text-gray-700 hover:text-[#b76e79] transition duration-300">Contact</a>
                 </div>
+                <!-- FIXED: Mobile hamburger button with proper event handling -->
                 <div class="md:hidden">
-                    <button class="text-gray-700 focus:outline-none">
-                        <i class="fas fa-bars text-2xl"></i>
+                    <button id="mobile-menu-button" class="hamburger-btn">
+                        <i class="fas fa-bars"></i>
                     </button>
                 </div>
+            </div>
+            <!-- ADDED: Mobile menu dropdown -->
+            <div id="mobile-menu" class="mobile-menu">
+                <a href="#home">Home</a>
+                <a href="#products">Products</a>
+                <a href="#collections">Collections</a>
+                <a href="#instagram">Gallery</a>
+                <a href="#about">About</a>
+                <a href="#contact">Contact</a>
             </div>
         </div>
     </nav>
@@ -758,10 +803,7 @@
         </div>
     </div>
 
-    <!-- WhatsApp Float Button -->
-    <a href="https://wa.me/919876543210?text=Hi! I'm interested in your ethnic wear collection" class="whatsapp-float" target="_blank" title="Chat with us on WhatsApp">
-        <i class="fab fa-whatsapp"></i>
-    </a>
+    <!-- REMOVED: WhatsApp Float Button - as requested -->
 
     <script>
         // Product data for quick view - FIXED IMAGE PATHS
@@ -923,6 +965,47 @@
                 }
             };
 
+            // ADDED: Mobile menu toggle functionality - FIX FOR HAMBURGER MENU
+            const mobileMenuButton = document.getElementById('mobile-menu-button');
+            const mobileMenu = document.getElementById('mobile-menu');
+            
+            if (mobileMenuButton && mobileMenu) {
+                mobileMenuButton.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    
+                    // Toggle the mobile menu
+                    mobileMenu.classList.toggle('active');
+                    
+                    // Change hamburger icon to X when menu is open
+                    const icon = mobileMenuButton.querySelector('i');
+                    if (mobileMenu.classList.contains('active')) {
+                        icon.className = 'fas fa-times';
+                    } else {
+                        icon.className = 'fas fa-bars';
+                    }
+                });
+                
+                // Close mobile menu when clicking on a link
+                const mobileMenuLinks = mobileMenu.querySelectorAll('a');
+                mobileMenuLinks.forEach(link => {
+                    link.addEventListener('click', function() {
+                        mobileMenu.classList.remove('active');
+                        const icon = mobileMenuButton.querySelector('i');
+                        icon.className = 'fas fa-bars';
+                    });
+                });
+                
+                // Close mobile menu when clicking outside
+                document.addEventListener('click', function(e) {
+                    if (!mobileMenuButton.contains(e.target) && !mobileMenu.contains(e.target)) {
+                        mobileMenu.classList.remove('active');
+                        const icon = mobileMenuButton.querySelector('i');
+                        icon.className = 'fas fa-bars';
+                    }
+                });
+            }
+
             // Enhanced form submission handling
             const contactForm = document.querySelector('#contact form');
             if (contactForm) {
@@ -967,10 +1050,10 @@
                 });
             });
 
-            // Add scroll-to-top functionality
+            // Add scroll-to-top functionality (KEPT THE ARROW BUTTON - as requested)
             let scrollToTopBtn = document.createElement('button');
             scrollToTopBtn.innerHTML = '<i class="fas fa-arrow-up"></i>';
-            scrollToTopBtn.className = 'fixed bottom-24 right-4 w-12 h-12 bg-[#b76e79] text-white rounded-full shadow-lg opacity-0 transition-all duration-300 z-50 hover:bg-[#9a5b65]';
+            scrollToTopBtn.className = 'fixed bottom-8 right-8 w-12 h-12 bg-[#b76e79] text-white rounded-full shadow-lg opacity-0 transition-all duration-300 z-50 hover:bg-[#9a5b65]';
             scrollToTopBtn.style.display = 'none';
             document.body.appendChild(scrollToTopBtn);
 
